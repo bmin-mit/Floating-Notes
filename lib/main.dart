@@ -1,32 +1,11 @@
-import 'package:floating_notes/screens/home.dart';
+import 'package:floating_notes/bootstrap.dart';
+import 'package:floating_notes/src/resources/notes/notes_repository.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
-}
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final notesProvider = NotesProvider();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Floating Notes',
-      themeMode: ThemeMode.system,
-      // theme: ThemeData.light(),
-      // darkTheme: ThemeData.dark(),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
-      home: Material(child: HomeScreen()),
-    );
-  }
+  bootstrap(notesProvider: notesProvider);
 }

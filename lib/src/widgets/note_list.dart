@@ -1,4 +1,8 @@
+import 'package:floating_notes/src/models/note.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../blocs/notes/notes_bloc.dart';
 
 class NoteList extends StatelessWidget {
   const NoteList({super.key});
@@ -6,14 +10,15 @@ class NoteList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.separated(
-        itemCount: 3,
-        padding: EdgeInsets.symmetric(horizontal: 8),
-        separatorBuilder: (context, index) => SizedBox(height: 8),
-        itemBuilder: (context, index) {
-          return NoteTile(
-            title: 'Note $index',
-            content: 'This is the content of note $index',
+      child: BlocBuilder<NotesBloc, NotesState>(
+        builder: (context, state) {
+          return ListView.separated(
+            itemCount: state.notes.length,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            separatorBuilder: (context, index) => SizedBox(height: 8),
+            itemBuilder: (context, index) {
+              return NoteTile(note: state.notes[index]);
+            },
           );
         },
       ),
@@ -22,10 +27,9 @@ class NoteList extends StatelessWidget {
 }
 
 class NoteTile extends StatelessWidget {
-  final String title;
-  final String content;
+  final Note note;
 
-  const NoteTile({super.key, required this.title, required this.content});
+  const NoteTile({super.key, required this.note});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +42,9 @@ class NoteTile extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       child: ListTile(
-        title: Text(title, style: theme.textTheme.titleSmall),
+        title: Text(note.title, style: theme.textTheme.titleSmall),
         subtitle: Text(
-          content,
+          note.content,
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
