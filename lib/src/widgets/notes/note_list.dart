@@ -41,15 +41,7 @@ class NoteTile extends StatelessWidget {
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
-      child: ListTile(
-        title: Text(note.title, style: theme.textTheme.titleSmall),
-        subtitle: Text(
-          note.content,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-      ),
+      child: ListTile(title: Text(note.title), subtitle: Text(note.content)),
     );
   }
 }

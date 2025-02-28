@@ -39,10 +39,11 @@ class App extends StatelessWidget {
         seedColor: seedColor,
         brightness: brightness,
       ),
+      fontFamily: 'Product Sans',
       useMaterial3: true,
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
-          TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
           // Apply this to every platforms you need.
         },
       ),
