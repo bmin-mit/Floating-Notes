@@ -3,11 +3,10 @@ import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:floating_notes/src/app/app.dart';
-import 'package:floating_notes/src/app/app_bloc_observer.dart';
 import 'package:floating_notes/src/resources/notes/notes_repository.dart';
 import 'package:flutter/material.dart';
 
-void bootstrap({required NotesProvider notesProvider}) {
+void bootstrap() {
   WidgetsFlutterBinding.ensureInitialized();
 
   FlutterError.onError = (details) {
@@ -21,6 +20,5 @@ void bootstrap({required NotesProvider notesProvider}) {
 
   Bloc.observer = AppBlocObserver();
 
-  final notesRepository = NotesRepository(notesProvider: notesProvider);
-  runApp(App(notesRepository: notesRepository));
+  runApp(App());
 }

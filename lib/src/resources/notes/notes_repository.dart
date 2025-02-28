@@ -5,8 +5,8 @@ part 'notes_provider.dart';
 class NotesRepository {
   final NotesProvider _notesProvider;
 
-  const NotesRepository({required NotesProvider notesProvider})
-    : _notesProvider = notesProvider;
+  NotesRepository({NotesProvider? notesProvider})
+    : _notesProvider = notesProvider ?? NotesProvider();
 
   List<Note> getNotes() {
     return _notesProvider.getNotes();

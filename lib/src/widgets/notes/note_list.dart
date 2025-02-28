@@ -2,7 +2,7 @@ import 'package:floating_notes/src/models/note.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/notes/notes_bloc.dart';
+import '../../blocs/notes/notes_bloc.dart';
 
 class NoteList extends StatelessWidget {
   const NoteList({super.key});
