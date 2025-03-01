@@ -11,4 +11,15 @@ class NotesRepository {
   List<Note> getNotes() {
     return _notesProvider.getNotes();
   }
+
+  List<Note> addNote(Note note) {
+    return _notesProvider.addNote(note);
+  }
+
+  Note createNote() {
+    final note = Note();
+    addNote(note);
+
+    return note;
+  }
 }

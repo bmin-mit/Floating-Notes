@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:floating_notes/src/app/app.dart';
-import 'package:floating_notes/src/resources/notes/notes_repository.dart';
 import 'package:flutter/material.dart';
 
 void bootstrap() {

@@ -9,16 +9,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create:
-          (context) =>
-              NotesBloc(noteRepository: context.read())
-                ..add(NotesSubscriptionRequested()),
-      child: SafeArea(
-        child: Scaffold(
-          body: NoteList(),
-          floatingActionButton: NoteCreateButton(),
-        ),
+    return SafeArea(
+      child: Scaffold(
+        body: NoteList(),
+        floatingActionButton: NoteCreateButton(),
       ),
     );
   }

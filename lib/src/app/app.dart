@@ -4,6 +4,7 @@ import 'package:floating_notes/src/resources/notes/notes_repository.dart';
 import 'package:floating_notes/src/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:floating_notes/src/blocs/notes/notes_bloc.dart';
 
 part 'app_bloc_observer.dart';
 
@@ -18,16 +19,21 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: notesRepository,
-      child: MaterialApp(
-        title: 'Floating Notes',
-        themeMode: ThemeMode.system,
-        theme: _buildTheme(Brightness.light),
-        darkTheme: _buildTheme(Brightness.dark),
-        home: Material(
-          child: RepositoryProvider(
-            create: (context) => notesRepository,
-            child: HomeScreen(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<NotesBloc>(
+            create:
+                (BuildContext context) =>
+                    NotesBloc(noteRepository: context.read()),
           ),
+        ],
+
+        child: MaterialApp(
+          title: 'Floating Notes',
+          themeMode: ThemeMode.system,
+          theme: _buildTheme(Brightness.light),
+          darkTheme: _buildTheme(Brightness.dark),
+          home: Material(child: HomeScreen()),
         ),
       ),
     );

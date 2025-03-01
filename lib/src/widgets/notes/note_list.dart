@@ -12,16 +12,26 @@ final class NoteList extends StatelessWidget {
     return Expanded(
       child: BlocBuilder<NotesBloc, NotesState>(
         builder: (context, state) {
-          return ListView.separated(
-            itemCount: state.notes.length,
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            separatorBuilder: (context, index) => SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              return NoteTile(note: state.notes[index]);
-            },
-          );
+          context.read<NotesBloc>().add(NotesEventFetch());
+
+          if (state is NotesStateLoaded) {
+            return _buildList(state);
+          }
+
+          return Center(child: CircularProgressIndicator());
         },
       ),
+    );
+  }
+
+  Widget _buildList(NotesStateLoaded state) {
+    return ListView.separated(
+      itemCount: state.notes.length,
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      separatorBuilder: (context, index) => SizedBox(height: 8),
+      itemBuilder: (context, index) {
+        return NoteTile(note: state.notes[index]);
+      },
     );
   }
 }
@@ -50,7 +60,7 @@ final class NoteTile extends StatelessWidget {
                           : EdgeInsets.zero,
                   child: NoteTileTitle(title: note.title),
                 )
-                : SizedBox.shrink(),
+                : null,
         subtitle:
             note.content.isNotEmpty
                 ? NoteTileContent(content: note.content)
@@ -88,7 +98,7 @@ final class NoteTileTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(title, style: TextStyle(fontWeight: FontWeight.bold));
+    return Text(title, style: TextStyle(fontWeight: FontWeight.w500));
   }
 }
 

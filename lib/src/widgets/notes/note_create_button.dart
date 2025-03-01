@@ -1,4 +1,4 @@
-import 'package:floating_notes/src/screens/note_create.dart';
+import 'package:floating_notes/src/screens/note_edit.dart';
 import 'package:flutter/material.dart';
 
 class NoteCreateButton extends StatelessWidget {
@@ -20,7 +20,7 @@ class NoteCreateButton extends StatelessWidget {
     return () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => const NoteCreateScreen()),
+        MaterialPageRoute(builder: (_) => const NoteEditScreen()),
       );
     };
   }

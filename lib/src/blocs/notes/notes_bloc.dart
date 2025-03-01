@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:floating_notes/src/resources/notes/notes_repository.dart';
 import 'package:meta/meta.dart';
 
-import '../../models/note.dart';
+import 'package:floating_notes/src/models/note.dart';
 
 part 'notes_event.dart';
 
@@ -14,15 +14,16 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
   NotesBloc({required NotesRepository noteRepository})
     : _notesRepository = noteRepository,
       super(NotesState()) {
-    on<NotesSubscriptionRequested>(_onNotesSubscriptionRequested);
+    on<NotesEventFetch>(_onFetchNotes);
+    on<NotesEventCreate>(_onCreateNote);
   }
 
-  void _onNotesSubscriptionRequested(
-    NotesSubscriptionRequested event,
-    Emitter<NotesState> emit,
-  ) {
-    emit(state.copyWith());
+  void _onFetchNotes(NotesEventFetch event, Emitter<NotesState> emit) {
+    emit(NotesStateLoaded(notes: _notesRepository.getNotes()));
+  }
 
-    emit(state.copyWith(notes: () => _notesRepository.getNotes()));
+  void _onCreateNote(NotesEventCreate event, Emitter<NotesState> emit) {
+    final note = _notesRepository.createNote();
+    emit(NotesStateCreated(note: note));
   }
 }
