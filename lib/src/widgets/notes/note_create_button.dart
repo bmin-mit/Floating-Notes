@@ -6,14 +6,22 @@ class NoteCreateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return FloatingActionButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const NoteCreateScreen()),
-        );
-      },
-      child: const Icon(Icons.add),
+      onPressed: _navigateToCreateNote(context),
+      backgroundColor: theme.colorScheme.primary,
+      foregroundColor: theme.colorScheme.onPrimary,
+      child: const Icon(Icons.add, size: 28),
     );
+  }
+
+  _navigateToCreateNote(BuildContext context) {
+    return () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const NoteCreateScreen()),
+      );
+    };
   }
 }

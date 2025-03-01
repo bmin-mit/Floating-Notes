@@ -14,14 +14,10 @@ class HomeScreen extends StatelessWidget {
           (context) =>
               NotesBloc(noteRepository: context.read())
                 ..add(NotesSubscriptionRequested()),
-      child: Scaffold(
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Column(children: [NoteList()]),
-              Positioned(right: 16, bottom: 16, child: NoteCreateButton()),
-            ],
-          ),
+      child: SafeArea(
+        child: Scaffold(
+          body: NoteList(),
+          floatingActionButton: NoteCreateButton(),
         ),
       ),
     );
