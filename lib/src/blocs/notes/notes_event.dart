@@ -8,7 +8,7 @@ final class NotesEventFetch extends NotesEvent {}
 final class NotesEventCreate extends NotesEvent {}
 
 final class NotesEventUpdate extends NotesEvent {
-  final String noteId;
+  final Note note;
 
-  NotesEventUpdate({required this.noteId});
+  NotesEventUpdate({required this.note});
 }

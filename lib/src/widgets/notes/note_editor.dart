@@ -1,7 +1,10 @@
+import 'package:floating_notes/src/models/note.dart';
 import 'package:flutter/material.dart';
 
 class NoteEditor extends StatelessWidget {
-  const NoteEditor({super.key});
+  final Note note;
+
+  const NoteEditor({super.key, required this.note});
 
   @override
   Widget build(BuildContext context) {

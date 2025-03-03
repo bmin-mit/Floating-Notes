@@ -22,4 +22,8 @@ class NotesRepository {
 
     return note;
   }
+
+  updateNote(Note note) {
+    return _notesProvider.updateNote(note);
+  }
 }

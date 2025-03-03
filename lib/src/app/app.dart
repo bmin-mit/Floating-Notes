@@ -9,32 +9,27 @@ import 'package:floating_notes/src/blocs/notes/notes_bloc.dart';
 part 'app_bloc_observer.dart';
 
 class App extends StatelessWidget {
-  App({super.key});
-
-  final NotesRepository notesRepository = NotesRepository();
+  const App({super.key});
 
   final seedColor = Colors.blue;
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: notesRepository,
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<NotesBloc>(
-            create:
-                (BuildContext context) =>
-                    NotesBloc(noteRepository: context.read()),
-          ),
-        ],
-
-        child: MaterialApp(
-          title: 'Floating Notes',
-          themeMode: ThemeMode.system,
-          theme: _buildTheme(Brightness.light),
-          darkTheme: _buildTheme(Brightness.dark),
-          home: Material(child: HomeScreen()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<NotesBloc>(
+          create:
+              (BuildContext context) =>
+                  NotesBloc(noteRepository: NotesRepository()),
         ),
+      ],
+
+      child: MaterialApp(
+        title: 'Floating Notes',
+        themeMode: ThemeMode.system,
+        theme: _buildTheme(Brightness.light),
+        darkTheme: _buildTheme(Brightness.dark),
+        home: Material(child: HomeScreen()),
       ),
     );
   }

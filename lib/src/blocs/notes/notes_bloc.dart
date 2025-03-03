@@ -16,14 +16,22 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
       super(NotesState()) {
     on<NotesEventFetch>(_onFetchNotes);
     on<NotesEventCreate>(_onCreateNote);
+    on<NotesEventUpdate>(_onEditNote);
   }
 
   void _onFetchNotes(NotesEventFetch event, Emitter<NotesState> emit) {
-    emit(NotesStateLoaded(notes: _notesRepository.getNotes()));
+    emit(NotesStateFetched(notes: _notesRepository.getNotes()));
   }
 
   void _onCreateNote(NotesEventCreate event, Emitter<NotesState> emit) {
     final note = _notesRepository.createNote();
     emit(NotesStateCreated(note: note));
+    emit(NotesStateFetched(notes: _notesRepository.getNotes()));
+  }
+
+  void _onEditNote(NotesEventUpdate event, Emitter<NotesState> emit) {
+    final note = _notesRepository.updateNote(event.note);
+    emit(NotesStateUpdated(note: note));
+    emit(NotesStateFetched(notes: _notesRepository.getNotes()));
   }
 }

@@ -5,14 +5,26 @@ final class NotesState {
   const NotesState();
 }
 
-final class NotesStateLoaded extends NotesState {
+final class NotesStateFetched extends NotesState {
   final List<Note> notes;
 
-  const NotesStateLoaded({required this.notes});
+  const NotesStateFetched({required this.notes});
 }
 
 final class NotesStateCreated extends NotesState {
   final Note note;
 
   const NotesStateCreated({required this.note});
+}
+
+final class NotesStateUpdated extends NotesState {
+  final Note note;
+
+  const NotesStateUpdated({required this.note});
+}
+
+final class NotesStateDeleted extends NotesState {
+  final Note note;
+
+  const NotesStateDeleted({required this.note});
 }

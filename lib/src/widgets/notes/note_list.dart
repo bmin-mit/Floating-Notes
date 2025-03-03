@@ -3,18 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:floating_notes/src/blocs/notes/notes_bloc.dart';
+import 'package:floating_notes/src/screens/note_edit.dart';
 
-final class NoteList extends StatelessWidget {
+final class NoteList extends StatefulWidget {
   const NoteList({super.key});
+
+  @override
+  State<NoteList> createState() => _NoteListState();
+}
+
+class _NoteListState extends State<NoteList> {
+  @override
+  void didChangeDependencies() {
+    context.read<NotesBloc>().add(NotesEventFetch());
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: BlocBuilder<NotesBloc, NotesState>(
         builder: (context, state) {
-          context.read<NotesBloc>().add(NotesEventFetch());
-
-          if (state is NotesStateLoaded) {
+          if (state is NotesStateFetched) {
             return _buildList(state);
           }
 
@@ -24,7 +34,7 @@ final class NoteList extends StatelessWidget {
     );
   }
 
-  Widget _buildList(NotesStateLoaded state) {
+  Widget _buildList(NotesStateFetched state) {
     return ListView.separated(
       itemCount: state.notes.length,
       padding: EdgeInsets.symmetric(horizontal: 8),
@@ -45,11 +55,13 @@ final class NoteTile extends StatelessWidget {
   Widget build(BuildContext context) {
     if (note.title.isEmpty) {
       return NoteTileButton(
+        note: note,
         child: ListTile(title: NoteTileContent(content: note.content)),
       );
     }
 
     return NoteTileButton(
+      note: note,
       child: ListTile(
         title:
             note.title.isNotEmpty
@@ -72,15 +84,16 @@ final class NoteTile extends StatelessWidget {
 
 final class NoteTileButton extends StatelessWidget {
   final Widget? child;
+  final Note note;
 
-  const NoteTileButton({super.key, this.child});
+  const NoteTileButton({super.key, this.child, required this.note});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: _navigateToEditNote(context),
       style: OutlinedButton.styleFrom(
         padding: EdgeInsets.zero,
         side: BorderSide(color: theme.colorScheme.outline.withAlpha(128)),
@@ -88,6 +101,15 @@ final class NoteTileButton extends StatelessWidget {
       ),
       child: child,
     );
+  }
+
+  VoidCallback _navigateToEditNote(BuildContext context) {
+    return () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => NoteEditScreen(note: note)),
+      );
+    };
   }
 }
 
